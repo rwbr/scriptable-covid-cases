@@ -6,11 +6,11 @@ covidNumbers.method = "GET";
 let json = await covidNumbers.loadJSON();
 let biData = json["records"][0]["fields"];
 
-let casesPerPopulation = biData["cases_per_population"];
-let casesPer100k = biData["cases_per_100k"];
-let cases7Per100k = biData["cases7_per_100k"]
+let casesPerPopulation = biData["cases_per_population"].toFixed(2);
+let casesPer100k = Math.round(biData["cases_per_100k"]);
+let cases7Per100k = Math.round(biData["cases7_per_100k"]);
 let deaths = biData["deaths"];
-let deathRate = biData["death_rate"]
+let deathRate = biData["death_rate"].toFixed(2);
 let cases = biData["cases"];
 
 let lastUpdate = biData["last_update"];
@@ -25,7 +25,7 @@ console.log("Death rate         : " + deathRate);
 
 if (config.runsInWidget) {
   // create and show widget
-  let widget = createWidget("COVID19 Bielefeld", "${cases} gesamt", "${cases7Per100k} je 100k", "#53d769")
+  let widget = createWidget("COVID19 Bielefeld", `${cases} gesamt`, `${cases7Per100k}  je 100k`, "#53d769")
   Script.setWidget(widget);
   Script.complete()
 // Otherwise, create the widget.  
