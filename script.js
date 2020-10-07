@@ -1,5 +1,25 @@
+// Variables used by Scriptable.
+// These must be at the very top of the file. Do not edit.
+// icon-color: red; icon-glyph: user-md;
 // See https://npgeo-corona-npgeo-de.hub.arcgis.com/
 const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=&facet=death_rate&refine.rs=05711"
+
+const createStore = importModule('store');
+
+const store = createStore('store-covid');
+
+// Check the values from the last run of the script
+let lastCases = store.get("cases");
+let last7per100k = store.get("cases7per100k");
+
+if (lastCases === null) {
+  lastCases = 0;
+}
+if (lastCases === null) {
+  last7per100k = 0;  
+}
+console.log("Store cases.             : " + lastCases);
+console.log("Store cases per 100k (7d): " + lastCases);
 
 let covidNumbers = new Request(url);
 covidNumbers.method = "GET";
@@ -24,8 +44,12 @@ console.log("Death rate         : " + deathRate);
 
 
 if (config.runsInWidget) {
+  let color = "#f2553d";
+  if (last7per100k <= cases7Per100k || lastCases <= cases) {
+     color =  "#19cf5e";
+  }
   // create and show widget
-  let widget = createWidget("COVID19 Bielefeld", `${cases} gesamt`, `${cases7Per100k}  je 100k`, "#53d769")
+  let widget = createWidget("COVID19 Bielefeld", `${cases} gesamt`, `${cases7Per100k}  je 100k`, color)
   Script.setWidget(widget);
   Script.complete()
 // Otherwise, create the widget.  
