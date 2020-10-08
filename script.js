@@ -1,6 +1,3 @@
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: red; icon-glyph: user-md;
 // See https://npgeo-corona-npgeo-de.hub.arcgis.com/
 const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=&facet=death_rate&refine.rs=05711"
 
@@ -15,11 +12,11 @@ let last7per100k = store.get("cases7per100k");
 if (lastCases === null) {
   lastCases = 0;
 }
-if (lastCases === null) {
-  last7per100k = 0;  
+if (last7per100k === null) {
+  last7per100k = 0;
 }
-console.log("Store cases.             : " + lastCases);
-console.log("Store cases per 100k (7d): " + lastCases);
+console.log("Stored cases.             : " + lastCases);
+console.log("Stored cases per 100k (7d): " + last7per100k);
 
 let covidNumbers = new Request(url);
 covidNumbers.method = "GET";
@@ -42,6 +39,8 @@ console.log("Cases per 100k (7d): " + cases7Per100k);
 console.log("Deaths             : " + deaths);
 console.log("Death rate         : " + deathRate);
 
+store.set("cases", cases);
+store.set("cases7per100k", cases7Per100k);
 
 if (config.runsInWidget) {
   let color = "#f2553d";
