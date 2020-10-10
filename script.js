@@ -43,9 +43,9 @@ store.set("cases", cases);
 store.set("cases7per100k", cases7Per100k);
 
 if (config.runsInWidget) {
-  let color = "#f2553d";
+  let color = "#19cf5e";
   if (last7per100k <= cases7Per100k || lastCases <= cases) {
-     color =  "#19cf5e";
+     color =  "#f2553d";
   }
   // create and show widget
   let widget = createWidget("COVID19 Bielefeld", `${cases} gesamt`, `${cases7Per100k}  je 100k`, color)
